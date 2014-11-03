@@ -75,13 +75,9 @@ translateApp.controller('MasterController', ['$location', '$scope', 'blockPage',
 	
 	$scope.getSiteUrl = function (){
 		blockPage.block();
-		url = $location.absUrl();
-		index = url.indexOf('index.php/')
-		if(index > -1){
-			$scope.siteUrl= url.slice(0, index+10);
-		}else{
-			$scope.siteUrl = url+'index.php/';
-		}
+		url = window.location.origin;
+		pathArray = window.location.pathname.split( '/' );	
+		$scope.siteUrl = url+'/'+pathArray[1]+'/index.php/';
 		blockPage.unblock();
 	}
 	

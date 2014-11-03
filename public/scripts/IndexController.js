@@ -22,7 +22,7 @@ translateApp.controller('IndexController', ['$scope', 'blockPage', '$http', func
 		$http.post($scope.siteUrl + 'IndexController/GetHistorico', {aluno: aluno}).
 		success(function(data){
 			historico = data;
-			$scope.goTo('index.php/HistoricoController', historico);
+			$scope.goTo('HistoricoController', historico);
 			blockPage.unblock();
 		}).
 		error(function(data, status){

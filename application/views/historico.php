@@ -23,11 +23,11 @@
 								<td>
 									<div>
 										<div class="pointer" ng-hide="materia.showTrans" ng-click="materia.showTrans = true">
-											{{ShowSelectedTranslation(materia).txt}} <small ng-show="ShowSelectedTranslation(materia).type == 'gt'">Google Translator</small><span class="caret"></span>
+											{{ShowSelectedTranslation(materia).txt}} <span class="small trad-type" ng-show="ShowSelectedTranslation(materia).type == 'gt'">Google Translator</span><span class="caret"></span>
 										</div>
 										<div class="list-group" ng-show="materia.showTrans">
 											<a href="javascript:void(0)" ng-click="SelectTranslation(trad, materia)" ng-class="{active: trad == materia.tradSelected}" class="list-group-item pointer" ng-repeat="trad in materia.trad | orderBy:'choosen':true">
-												{{trad.txt}} <small class="trad-type" ng-show="trad.type == 'gt'">Google Translator</small><span class="caret"> <span class="badge">{{trad.choosen}}</span>
+												{{trad.txt}} <span class="small trad-type" ng-show="trad.type == 'gt'">Google Translator</span><span class="badge">{{trad.choosen}}</span>
 											</a>
 											<div class="list-group-item">
 												<div class="form-group">

@@ -1,5 +1,6 @@
 <?php	
 include 'application/controllers/BaseController.php';
+require_once 'HTTP/Request2.php';
 class HistoricoController extends BaseController{
 	function index(){
 		$this->load->model("Materia");
@@ -11,11 +12,12 @@ class HistoricoController extends BaseController{
 			foreach ($semestre->materias as $materia){
 				$m = new stdClass();
 				$m->cod = $materia->cod;
+				
 				if($mt = $this->Materia->get($m)){
 					$mt->trad = new stdClass();
 					$mid = new stdClass();
 					$mid->materias_id = $mt->id;
-					
+				
 					$trad = $this->Traducao->get($mid);
 					if(is_array($trad))
 						$materia->trad = $trad;
@@ -29,7 +31,8 @@ class HistoricoController extends BaseController{
 						$alert->msg = "A materia não foi inserida corretamente";
 						$data->alerts[] = $alert;
 					}
-					//TODO: procurar tradução no translator
+					
+					$this->TranslateMateria($materia);
 					$materia->trad = array();
 				}
 			}
@@ -102,6 +105,14 @@ class HistoricoController extends BaseController{
 			$this->returnOK($response);
 		else
 			$this->returnOK($response);
+	}
+	
+	public function TranslateMateria(&$materia){
+		$word = $materia->orig;
+		$request = new HTTP_Request2("https://www.googleapis.com/language/translate/v2?key=AIzaSyDmDkz5NwFo9wcR5ZF9Uc8XPNZZt3Su6mA&q=".$word."source=pt&target=en", HTTP_Request2::METHOD_GET);
+		
+		$a = $request->send();
+		var_dump($a);
 	}
 	
 	
