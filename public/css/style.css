@@ -1,0 +1,45 @@
+.block{
+	display: none;
+}
+
+.block.active{
+	display:block;
+	top: 0;
+	right: 0;
+	position: absolute;
+	z-index: 999999;
+	background: rgba(255, 255, 255, 0.8);
+	width: 100%;
+}
+
+.block .loader{
+	margin: 20% auto 0 auto;
+	width: 128px;
+	height: 128px;
+	background: url('../img/712.GIF'); 
+}
+
+.pointer{
+	cursor: pointer;
+}
+
+.margin-bottom-10{
+	margin-bottom: 10px;
+}
+
+.divAlert{
+	position: fixed;
+	top: 10%;
+	right: 20%;
+	z-index: 9999;
+}
+
+span.deleteTranslation{
+	z-index: 99999;
+	cursor: default;
+	font-size: 15px;	
+}
+
+.trad-type{
+	font-size: 40%;
+}
