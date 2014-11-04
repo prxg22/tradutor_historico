@@ -68,7 +68,7 @@ translateApp.controller('MasterController', ['$location', '$scope', 'blockPage',
 		$.post($scope.siteUrl + 'BaseController/saveNextRequest', {nextRequest: data})
 		.success(function(data){
 			if(data == 'ok'){
-				window.location.href = controller;
+				window.location.href = $scope.siteUrl + controller;
 			}
 		});
 	};

@@ -30,9 +30,16 @@
 												{{trad.txt}} <span class="small trad-type" ng-show="trad.type == 'gt'">Google Translator</span><span class="badge">{{trad.choosen}}</span>
 											</a>
 											<div class="list-group-item">
-												<div class="form-group">
-													<input class="form-control" ng-model="materia.newTranslation" placeholder="Outro" ng-blur="SelectNewTranslation(materia)" />
-												</div>
+												<form ng-submit="SelectNewTranslation(materia)">
+													<div class="form-group">
+														<div class="input-group">
+												      		<input class="form-control" ng-model="materia.newTranslation" placeholder="Outro" />
+												      		<span class="input-group-btn">
+														        <button class="btn btn-primary" ng-click="SelectNewTranslation(materia)" type="button"><i class="glyphicon glyphicon-plus"></i></button>
+														    </span>
+												    	</div>
+													</div>
+												</form>
 											</div>
 										</div>
 									</div>

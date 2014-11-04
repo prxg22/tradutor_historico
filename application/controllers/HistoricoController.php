@@ -1,6 +1,5 @@
 <?php	
 include 'application/controllers/BaseController.php';
-require_once 'HTTP/Request2.php';
 class HistoricoController extends BaseController{
 	function index(){
 		$this->load->model("Materia");
@@ -33,7 +32,6 @@ class HistoricoController extends BaseController{
 					}
 					
 					$this->TranslateMateria($materia);
-					$materia->trad = array();
 				}
 			}
 		}
@@ -108,11 +106,40 @@ class HistoricoController extends BaseController{
 	}
 	
 	public function TranslateMateria(&$materia){
-		$word = $materia->orig;
-		$request = new HTTP_Request2("https://www.googleapis.com/language/translate/v2?key=AIzaSyDmDkz5NwFo9wcR5ZF9Uc8XPNZZt3Su6mA&q=".$word."source=pt&target=en", HTTP_Request2::METHOD_GET);
+		$this->load->model('Traducao');
+		$this->load->model('Materia');
+		$text = $materia->orig;
+		//$request = new HTTP_Request2("https://www.googleapis.com/language/translate/v2?key=AIzaSyDmDkz5NwFo9wcR5ZF9Uc8XPNZZt3Su6mA&q=hello%20world&source=pt&target=en", HTTP_Request2::METHOD_GET);
+		$ch = curl_init("https://www.googleapis.com/language/translate/v2?key=AIzaSyDmDkz5NwFo9wcR5ZF9Uc8XPNZZt3Su6mA&q=".rawurlencode($text)."&source=pt&target=en");
+	
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 		
-		$a = $request->send();
-		var_dump($a);
+		// execute the HTTP request
+		if (($json = curl_exec($ch)) === FALSE) {
+			echo curl_error($ch);
+			exit();
+		}
+		
+		$result = json_decode($json);
+		//{ "data": { "translations": [ { "translatedText": "horse" } ] } }
+		$translated = $result->data->translations[0]->translatedText;
+		
+		$trad = new stdClass();
+		$trad->txt = $translated;
+		$trad->type = "gt";
+		$trad->choosen = 0;
+		$mat = new stdClass();
+		$mat->cod = $materia->cod;
+		if($mat = $this->Materia->get($mat)){
+			$trad->materias_id = $mat->id;
+			if($this->Traducao->insert($mat->id, $trad)){
+				$trad = $this->Traducao->get($trad);
+				$materia->trad[] = $trad;
+			}
+		}
+		
+		
 	}
 	
 	

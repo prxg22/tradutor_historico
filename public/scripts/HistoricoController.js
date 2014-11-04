@@ -68,7 +68,7 @@ translateApp.controller('HistoricoController', ['$scope', 'blockPage', function(
 		if(!trads)
 			trads = [];
 		
-		newTrans ={id: -1, txt: materia.newTranslation, choosen: 0};
+		newTrans ={id: -1, txt: materia.newTranslation, choosen: 1};
 		trads.push(newTrans);
 		materia.newTranslation = '';
 		$scope.SelectTranslation(newTrans, materia);
